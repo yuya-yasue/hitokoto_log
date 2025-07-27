@@ -1,0 +1,65 @@
+<!-- app/views/devise/registrations/edit.html.erb -->
+
+<h2 class="mb-4">マイページ編集</h2>
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true, class: "card p-4 shadow-sm" }) do |f| %>
+  <% if resource.errors.any? %>
+    <div class="alert alert-danger">
+      <ul>
+        <% resource.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <!-- メールアドレス -->
+  <div class="mb-3">
+    <%= f.label :email, "メールアドレス", class: "form-label" %>
+    <%= f.email_field :email, class: "form-control", autofocus: true %>
+  </div>
+
+  <!-- ニックネーム -->
+  <div class="mb-3">
+    <%= f.label :nickname, "ニックネーム", class: "form-label" %>
+    <%= f.text_field :nickname, class: "form-control" %>
+  </div>
+
+  <!-- プロフィール画像 -->
+  <div class="mb-3">
+    <%= f.label :avatar, "プロフィール画像", class: "form-label" %><br>
+    <%= f.file_field :avatar, class: "form-control" %>
+    <% if resource.avatar.attached? %>
+      <div class="mt-2">
+        <%= image_tag resource.avatar.variant(resize_to_limit: [100, 100]), class: "rounded" %>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- パスワード変更（任意） -->
+  <div class="mb-3">
+    <%= f.label :password, "新しいパスワード（空欄で変更なし）", class: "form-label" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :password_confirmation, "パスワード（確認）", class: "form-label" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+  </div>
+
+  <!-- 現在のパスワード（更新には必要） -->
+  <div class="mb-3">
+    <%= f.label :current_password, "現在のパスワード（変更を保存するには必須）", class: "form-label" %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+  </div>
+
+  <!-- 更新ボタン -->
+  <div class="mb-3">
+    <%= f.submit "更新する", class: "btn btn-primary" %>
+    <%= link_to "戻る", root_path, class: "btn btn-secondary ms-2" %>
+  </div>
+<% end %>
+
+<!-- 退会リンク -->
+<h3 class="mt-5">アカウント削除</h3>
+<%= button_to "アカウントを削除する", registration_path(resource_name), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger mt-2" %>

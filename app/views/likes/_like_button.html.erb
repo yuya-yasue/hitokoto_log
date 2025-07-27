@@ -1,0 +1,13 @@
+<turbo-frame id="like_button_<%= post.id %>">
+  <% if current_user && current_user.liked?(post) %>
+    <%= button_to post_like_path(post), method: :delete, data: { turbo_frame: "like_button_#{post.id}" }, class: "btn btn-sm btn-outline-danger" do %>
+      💔 いいね解除
+    <% end %>
+  <% elsif current_user %>
+    <%= button_to post_like_path(post), method: :post, data: { turbo_frame: "like_button_#{post.id}" }, class: "btn btn-sm btn-outline-primary" do %>
+      ❤️ いいね
+    <% end %>
+  <% else %>
+    <span class="text-muted">ログインで「いいね」できます</span>
+  <% end %>
+</turbo-frame>
